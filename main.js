@@ -1,27 +1,23 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, globalShortcut } = require("electron");
+const { app, BrowserWindow, globalShortcut, ipcMain } = require("electron");
 app.allowRendererProcessReuse = true;
 
 const path = require("path");
 const { execSync } = require("child_process");
 
 // Enable live reload for all the files inside your project directory
-require("electron-reload")(__dirname, {
-  electron: require(`${__dirname}/node_modules/electron`)
-});
+// require("electron-reload")(__dirname, {
+//   electron: require(`${__dirname}/node_modules/electron`)
+// });
 function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 250,
+    center: true,
     transparent: true,
     frame: false,
-
     fullscreenable: false,
-    center: true,
-
     show: false,
-
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
     }
@@ -43,33 +39,31 @@ function createWindow() {
     }, 100);
   }
 
-  mainWindow.webContents.on("console-message", (event, level, message) => {
-    console.log("createWindow -> message", message);
-    if (message.startsWith("done")) {
-      globalShortcut.register(
-        "alt+tab",
-        () => {
-          mainWindow.show();
-          mainWindow.setFocusable(true);
-          mainWindow.focus();
-          app.dock.hide();
-          globalShortcut.unregister("alt+tab");
-        },
-        10
-      );
-      mainWindow.hide();
-      app.dock.hide();
-      mainWindow.setFocusable(false);
+  // mainWindow.webContents.on("console-message", (event, level, message) => {
+  // console.log("createWindow -> console-message -> event, level, message", event, level, message);
+  // });
 
-      const option = message.split(" ").pop();
-      execSync(`code ${option}`);
-    }
+  ipcMain.on("resize-me-please", (event, { width, height }) => {
+    mainWindow.setSize(width, height);
+    mainWindow.center();
+  });
+  ipcMain.on("selected", (event, choice) => {
+    globalShortcut.register(
+      "alt+tab",
+      () => {
+        mainWindow.show();
+        mainWindow.setFocusable(true);
+        mainWindow.focus();
+        app.dock.hide();
+        globalShortcut.unregister("alt+tab");
+      },
+      10
+    );
+    mainWindow.hide();
+    app.dock.hide();
+    mainWindow.setFocusable(false);
 
-    if (message.startsWith("{")) {
-      const size = JSON.parse(message);
-      mainWindow.setSize(size.width, size.height);
-      mainWindow.center();
-    }
+    execSync(`code ${choice}`);
   });
 
   mainWindow.loadFile("index.html");

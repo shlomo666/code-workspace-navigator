@@ -1,6 +1,7 @@
 const state = require("./state");
 const { replaceText } = require("./utils");
 const { widthPerCell, heightPerCell } = require("./styles");
+const { ipcRenderer } = require("electron");
 
 window.addEventListener("DOMContentLoaded", () => {
   state.setListOfOpenedProjects();
@@ -8,7 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   window.onkeyup = (key) => {
     if (key.key === "Alt" || !key.altKey) {
-      console.log(`done ${state.getCurrentProject()}`);
+      ipcRenderer.send("selected", state.getCurrentProject());
     }
   };
   window.onkeydown = (key) => {
@@ -32,12 +33,10 @@ window.addEventListener("DOMContentLoaded", () => {
     state.idx = 1;
     setScreen();
 
-    console.log(
-      JSON.stringify({
-        width: widthPerCell * state.listOfOpenedProjects.length,
-        height: heightPerCell
-      })
-    );
+    ipcRenderer.send("resize-me-please", {
+      width: widthPerCell * state.listOfOpenedProjects.length,
+      height: heightPerCell
+    });
   };
 });
 
