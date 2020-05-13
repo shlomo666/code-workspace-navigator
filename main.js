@@ -63,7 +63,7 @@ function createWindow() {
     app.dock.hide();
     mainWindow.setFocusable(false);
 
-    execSync(`code ${choice}`);
+    execSync(`/usr/local/bin/code ${choice}`);
   });
 
   mainWindow.loadFile("index.html");
