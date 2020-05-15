@@ -7,17 +7,18 @@
     "start": "electron .",
     "build": "electron-packager . --icon=\"./switcher.icns\" --overwrite --out=build"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/shlomo666/electron-quick-start",
   "keywords": [
     "vscode",
     "project",
     "switcher",
     "tab"
   ],
-  "author": "GitHub",
+  "author": "shlomo666",
   "license": "MIT",
   "devDependencies": {
     "electron": "^8.2.5",
+    "electron-packager": "^14.2.1",
     "electron-reload": "^1.5.0"
   },
   "dependencies": {},
