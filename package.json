@@ -1,7 +1,7 @@
 {
   "name": "code-project-switcher",
   "version": "1.0.0",
-  "description": "A vscode project tool to navigate between projects by alt+tab, just like OSX app switcher",
+  "description": "A tool to ease up navigation between vscode projects by alt+tab, just like OSX app switcher",
   "main": "main.js",
   "scripts": {
     "start": "electron .",

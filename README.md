@@ -1,6 +1,6 @@
 # code-project-switcher
 
-### A vscode project tool to ease up navigation between projects by alt+tab, just like OSX app switcher
+### A tool to ease up navigation between vscode projects by alt+tab, just like OSX app switcher
 
 First, run `npm i`. Then:
 
