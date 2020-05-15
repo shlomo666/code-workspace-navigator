@@ -1,4 +1,4 @@
-# code-project-switcher
+# code-workspace-navigator
 
 ### A tool to ease up navigation between vscode projects by alt+tab, just like OSX app switcher
 

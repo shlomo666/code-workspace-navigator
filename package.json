@@ -1,17 +1,19 @@
 {
-  "name": "code-project-switcher",
+  "name": "code-workspace-navigator",
   "version": "1.0.0",
   "description": "A tool to ease up navigation between vscode projects by alt+tab, just like OSX app switcher",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . --icon=\"./switcher.icns\" --overwrite --out=build"
+    "build": "electron-packager . --icon=\"./app_icon.icns\" --overwrite --out=build"
   },
   "repository": "https://github.com/shlomo666/electron-quick-start",
   "keywords": [
     "vscode",
     "project",
     "switcher",
+    "workspace",
+    "navigator",
     "tab"
   ],
   "author": "shlomo666",
