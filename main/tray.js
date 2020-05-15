@@ -1,10 +1,10 @@
-const { Tray, screen } = require("electron");
-const path = require("path");
-const { getContextMenu } = require("./getContextMenu");
-const { showMainWindow } = require("./util");
+const { Tray, screen } = require('electron');
+const path = require('path');
+const { getContextMenu } = require('./getContextMenu');
+const { showMainWindow } = require('./util');
 
 const appDir = path.dirname(require.main.filename);
-const package = require(appDir + "/package.json");
+const package = require(appDir + '/package.json');
 
 /** @type {Electron.BrowserWindow} */
 let mainWindow;
@@ -17,7 +17,7 @@ exports.setTray = (mainWindowPointer) => {
   activeDisplayScreenId = primaryDisplayId;
 
   if (!tray) {
-    tray = new Tray(appDir + "/menu_bar_icon.png");
+    tray = new Tray(appDir + '/menu_bar_icon.png');
   }
   const contextMenu = getContextMenu({
     primaryDisplayId,
@@ -30,10 +30,10 @@ exports.setTray = (mainWindowPointer) => {
 
 function includeMinimized(include) {
   excludeMinimized = !include;
-  console.log("excludeMinimized ->", excludeMinimized);
+  console.log('excludeMinimized ->', excludeMinimized);
 }
 function setDisplayScreen(id) {
-  console.log("setDisplayScreen -> id", id);
+  console.log('setDisplayScreen -> id', id);
   activeDisplayScreenId = id;
   const display = exports.getActiveDisplayScreen();
 

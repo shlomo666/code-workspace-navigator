@@ -1,6 +1,6 @@
-const { execSync } = require("child_process");
-const fs = require("fs");
-const { markedStyle, normalStyle } = require("./styles");
+const { execSync } = require('child_process');
+const fs = require('fs');
+const { markedStyle, normalStyle } = require('./styles');
 
 module.exports = {
   idx: 0,
@@ -31,7 +31,7 @@ module.exports = {
             i === this.idx ? markedStyle() : normalStyle()
           }">${getProjectProperDisplayName(s)}</div>`
       )
-      .join("\n");
+      .join('\n');
   },
 
   nextId() {
@@ -52,10 +52,10 @@ module.exports = {
 /** @param {string} s */
 function getProjectProperDisplayName(s) {
   return s
-    .split("/")
+    .split('/')
     .pop()
-    .split("home-is-")
+    .split('home-is-')
     .pop()
-    .replace(/\-/g, " ")
+    .replace(/\-/g, ' ')
     .replace(/[a-z]+/g, (p) => p[0].toUpperCase() + p.slice(1).toLowerCase());
 }

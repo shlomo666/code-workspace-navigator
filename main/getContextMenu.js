@@ -1,4 +1,4 @@
-const { app, Menu, screen } = require("electron");
+const { app, Menu, screen } = require('electron');
 
 exports.getContextMenu = ({
   primaryDisplayId,
@@ -7,19 +7,19 @@ exports.getContextMenu = ({
 }) => {
   return Menu.buildFromTemplate([
     {
-      label: "Include Minimized",
+      label: 'Include Minimized',
       submenu: Menu.buildFromTemplate([
         {
-          label: "Yes",
-          type: "radio",
+          label: 'Yes',
+          type: 'radio',
           click() {
             includeMinimized(true);
           },
           checked: true
         },
         {
-          label: "No",
-          type: "radio",
+          label: 'No',
+          type: 'radio',
           click() {
             includeMinimized(false);
           }
@@ -27,13 +27,13 @@ exports.getContextMenu = ({
       ])
     },
     {
-      label: "Active Display Screen",
+      label: 'Active Display Screen',
       submenu: Menu.buildFromTemplate(
         screen.getAllDisplays().map((display) => ({
           label: `screen ${display.id}${
-            display.id === primaryDisplayId ? " (Main)" : ""
+            display.id === primaryDisplayId ? ' (Main)' : ''
           }`,
-          type: "radio",
+          type: 'radio',
           click() {
             setDisplayScreen(display.id);
           },
@@ -42,7 +42,7 @@ exports.getContextMenu = ({
       )
     },
     {
-      label: "Quit",
+      label: 'Quit',
       click: () => app.quit()
     }
   ]);

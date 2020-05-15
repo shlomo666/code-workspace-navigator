@@ -5,19 +5,19 @@ const {
   globalShortcut,
   ipcMain,
   screen
-} = require("electron");
+} = require('electron');
 
-const path = require("path");
-const { execSync } = require("child_process");
-require("./number_prefix_logs");
-const { showMainWindow, hideMainWindow } = require("./util");
-const tray = require("./tray");
+const path = require('path');
+const { execSync } = require('child_process');
+require('./number_prefix_logs');
+const { showMainWindow, hideMainWindow } = require('./util');
+const tray = require('./tray');
 
 app.allowRendererProcessReuse = true;
 const appDir = path.dirname(require.main.filename);
 
 function createWindow() {
-  console.log("app.whenReady");
+  console.log('app.whenReady');
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 250,
@@ -27,43 +27,43 @@ function createWindow() {
     fullscreenable: false,
     show: false,
     webPreferences: {
-      preload: path.join(appDir, "preload.js")
+      preload: path.join(appDir, 'preload.js')
     }
   });
 
-  mainWindow.setAlwaysOnTop(true, "floating");
+  mainWindow.setAlwaysOnTop(true, 'floating');
   mainWindow.setVisibleOnAllWorkspaces(true);
   app.dock.show();
 
   showMainWindow(mainWindow);
   tray.setTray(mainWindow);
 
-  mainWindow.webContents.on("console-message", (event, level, message) => {
-    console.log("web:", message);
+  mainWindow.webContents.on('console-message', (event, level, message) => {
+    console.log('web:', message);
   });
 
-  ipcMain.on("resize-me-please", (event, { width, height }) => {
-    console.log("got resize-me-please request");
+  ipcMain.on('resize-me-please', (event, { width, height }) => {
+    console.log('got resize-me-please request');
 
     const maxWidth = tray.getActiveDisplayScreen().size.width;
     console.log(`${maxWidth} < ${width} = ${maxWidth < width}`);
     if (maxWidth < width) {
-      console.log("sending cannot-resize-you");
-      event.sender.send("cannot-resize-you", { maxWidth });
+      console.log('sending cannot-resize-you');
+      event.sender.send('cannot-resize-you', { maxWidth });
     } else {
       mainWindow.setSize(Math.floor(width), Math.floor(height));
       mainWindow.center();
-      console.log("sending resized-you");
-      event.sender.send("resized-you");
+      console.log('sending resized-you');
+      event.sender.send('resized-you');
     }
   });
-  ipcMain.on("selected", (event, choice) => {
+  ipcMain.on('selected', (event, choice) => {
     hideMainWindow(mainWindow);
 
     execSync(`/usr/local/bin/code ${choice}`);
   });
 
-  mainWindow.loadFile(appDir + "/index.html");
+  mainWindow.loadFile(appDir + '/index.html');
 }
 
 // This method will be called when Electron has finished
@@ -72,13 +72,13 @@ function createWindow() {
 app.whenReady().then(createWindow);
 
 // Quit when all windows are closed.
-app.on("window-all-closed", function () {
+app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== "darwin") app.quit();
+  if (process.platform !== 'darwin') app.quit();
 });
 
-app.on("activate", function () {
+app.on('activate', function () {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow();

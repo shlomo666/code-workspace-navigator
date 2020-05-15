@@ -1,1 +1,1 @@
-require("./preload/index");
+require('./preload/index');

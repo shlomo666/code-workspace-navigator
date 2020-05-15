@@ -1,4 +1,4 @@
-const { app, globalShortcut } = require("electron");
+const { app, globalShortcut } = require('electron');
 
 /** @param {Electron.BrowserWindow} mainWindow */
 exports.showMainWindow = (
@@ -6,28 +6,28 @@ exports.showMainWindow = (
   updateHTML = false,
   excludeMinimized = false
 ) => {
-  globalShortcut.unregister("alt+tab");
+  globalShortcut.unregister('alt+tab');
 
   app.dock.hide();
   mainWindow.showInactive();
   setTimeout(() => {
     mainWindow.focus();
     app.dock.show();
-    console.log("sending show");
-    mainWindow.webContents.send("show", updateHTML, excludeMinimized);
+    console.log('sending show');
+    mainWindow.webContents.send('show', updateHTML, excludeMinimized);
   }, 10);
 };
 
 /** @param {Electron.BrowserWindow} mainWindow */
 exports.hideMainWindow = (mainWindow) => {
   let back = false;
-  globalShortcut.register("alt+tab", () => {
+  globalShortcut.register('alt+tab', () => {
     if (!back) {
       back = true;
       exports.showMainWindow(
         mainWindow,
         false,
-        require("./tray").getExcludeMinimized()
+        require('./tray').getExcludeMinimized()
       );
     }
   });
