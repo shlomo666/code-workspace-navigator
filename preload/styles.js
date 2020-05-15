@@ -30,7 +30,8 @@ exports.setWidthPerCell = (newWidthPerCell) => {
   setAllVars();
 };
 
-const backColor = (opacity) => `rgba(10, 10, 10, ${opacity})`;
+const backColor = (opacity, minimized) =>
+  `rgba(${minimized ? '100, 100, 100' : '10, 10, 10'}, ${opacity})`;
 
 const standard = () => `
 margin: 0px ${gap}px;
@@ -49,14 +50,14 @@ justify-content: center;
 align-items: center;
 `;
 
-exports.markedStyle = () => `
+exports.markedStyle = (minimized) => `
 ${standard()}
-background-color: ${backColor(1)};
+background-color: ${backColor(1, minimized)};
 color: white;
 `;
 
-exports.normalStyle = () => `
+exports.normalStyle = (minimized) => `
 ${standard()}
-background-color: ${backColor(0.5)};
+background-color: ${backColor(0.5, minimized)};
 color: rgb(220, 220, 220);
 `;

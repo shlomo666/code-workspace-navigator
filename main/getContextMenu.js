@@ -2,18 +2,19 @@ const { app, Menu, screen } = require('electron');
 
 exports.getContextMenu = ({
   primaryDisplayId,
-  includeMinimized,
+  setExcludeMinimized,
   setDisplayScreen
 }) => {
   return Menu.buildFromTemplate([
     {
-      label: 'Include Minimized',
+      label: 'Exclude Minimized (this feature is not yet supported)',
+      enabled: false,
       submenu: Menu.buildFromTemplate([
         {
           label: 'Yes',
           type: 'radio',
           click() {
-            includeMinimized(true);
+            setExcludeMinimized(true);
           },
           checked: true
         },
@@ -21,7 +22,7 @@ exports.getContextMenu = ({
           label: 'No',
           type: 'radio',
           click() {
-            includeMinimized(false);
+            setExcludeMinimized(false);
           }
         }
       ])

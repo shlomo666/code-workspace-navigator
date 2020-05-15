@@ -1,35 +1,26 @@
+const { getListOfOpenedProjects } = require('./vscodeSettingsReader');
+
 const { execSync } = require('child_process');
-const fs = require('fs');
 const { markedStyle, normalStyle } = require('./styles');
 
 module.exports = {
   idx: 0,
+  /** @type {{ path: string; minimized: boolean; }[]} */
   listOfOpenedProjects: [],
 
   setListOfOpenedProjects(excludeMinimized) {
-    const settings = JSON.parse(
-      fs
-        .readFileSync(
-          `${process.env.HOME}/Library/Application Support/Code/storage.json`
-        )
-        .toString()
-    );
-    const listOfOpenedProjects = settings.windowsState.openedWindows
-      .filter((p) => (excludeMinimized ? p.uiState.x !== 0 : true))
-      .map((p) => p.folder.slice(7));
-    const order = settings.openedPathsList.workspaces3.map((p) => p.slice(7));
-    listOfOpenedProjects.sort((a, b) => order.indexOf(a) - order.indexOf(b));
-
-    this.listOfOpenedProjects = listOfOpenedProjects;
+    this.listOfOpenedProjects = getListOfOpenedProjects(excludeMinimized);
   },
 
   getHTML() {
     return this.listOfOpenedProjects
       .map(
-        (s, i) =>
+        (project, i) =>
           `<div onmouseover="setIdx(${i});" onmouseup="selectAndFinish()" style="${
-            i === this.idx ? markedStyle() : normalStyle()
-          }">${getProjectProperDisplayName(s)}</div>`
+            i === this.idx
+              ? markedStyle(project.minimized)
+              : normalStyle(project.minimized)
+          }">${getProjectProperDisplayName(project.path)}</div>`
       )
       .join('\n');
   },
@@ -45,7 +36,7 @@ module.exports = {
   },
 
   getCurrentProject() {
-    return this.listOfOpenedProjects[this.idx];
+    return this.listOfOpenedProjects[this.idx].path;
   }
 };
 

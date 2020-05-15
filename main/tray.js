@@ -21,15 +21,15 @@ exports.setTray = (mainWindowPointer) => {
   }
   const contextMenu = getContextMenu({
     primaryDisplayId,
-    includeMinimized,
+    setExcludeMinimized,
     setDisplayScreen
   });
   tray.setToolTip(package.productName);
   tray.setContextMenu(contextMenu);
 };
 
-function includeMinimized(include) {
-  excludeMinimized = !include;
+function setExcludeMinimized(exclude) {
+  excludeMinimized = exclude;
   console.log('excludeMinimized ->', excludeMinimized);
 }
 function setDisplayScreen(id) {
@@ -50,4 +50,5 @@ let activeDisplayScreenId;
 
 exports.getExcludeMinimized = () => excludeMinimized;
 exports.getActiveDisplayScreen = () =>
-  screen.getAllDisplays().find((d) => d.id === activeDisplayScreenId);
+  screen.getAllDisplays().find((d) => d.id === activeDisplayScreenId) ||
+  screen.getPrimaryDisplay().id;
