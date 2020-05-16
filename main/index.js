@@ -33,7 +33,6 @@ function createWindow() {
 
   mainWindow.setAlwaysOnTop(true, 'floating');
   mainWindow.setVisibleOnAllWorkspaces(true);
-  app.dock.show();
 
   setTimeout(() => {
     showMainWindow(mainWindow);
