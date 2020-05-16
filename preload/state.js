@@ -1,14 +1,15 @@
-const { getListOfOpenedProjects } = require('./vscodeSettingsReader');
-
 const { execSync } = require('child_process');
+const { getListOfOpenedProjects } = require('./vscodeSettingsReader');
 const { markedStyle, normalStyle } = require('./styles');
 
 module.exports = {
   idx: 0,
   /** @type {{ path: string; minimized: boolean; }[]} */
   listOfOpenedProjects: [],
+  lastExcludeMinimizedValue: false,
 
   setListOfOpenedProjects(excludeMinimized) {
+    this.lastExcludeMinimizedValue = excludeMinimized;
     this.listOfOpenedProjects = getListOfOpenedProjects(excludeMinimized);
   },
 

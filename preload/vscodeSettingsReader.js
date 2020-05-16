@@ -31,3 +31,9 @@ exports.getListOfOpenedProjects = (excludeMinimized) => {
 
   return listOfOpenedProjects;
 };
+
+exports.onSettingChanged = (cb) => {
+  fs.watchFile('vscodeSettingsFilePath', () => {
+    cb();
+  });
+};
