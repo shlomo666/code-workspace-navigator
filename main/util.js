@@ -10,6 +10,11 @@ exports.showMainWindow = (
 
   app.dock.hide();
   mainWindow.showInactive();
+
+  const { x, y } = require('./tray').getActiveDisplayScreen().bounds;
+  mainWindow.setBounds({ x, y });
+  mainWindow.center();
+
   setTimeout(() => {
     mainWindow.focus();
     app.dock.show();
