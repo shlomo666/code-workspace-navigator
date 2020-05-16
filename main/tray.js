@@ -17,6 +17,9 @@ exports.setTray = (mainWindowPointer) => {
   activeDisplayScreenId = primaryDisplayId;
 
   if (!tray) {
+    screen.on('display-added', () => exports.setTray(mainWindow));
+    screen.on('display-removed', () => exports.setTray(mainWindow));
+
     tray = new Tray(appDir + '/menu_bar_icon.png');
   }
   const contextMenu = getContextMenu({
@@ -51,4 +54,4 @@ let activeDisplayScreenId;
 exports.getExcludeMinimized = () => excludeMinimized;
 exports.getActiveDisplayScreen = () =>
   screen.getAllDisplays().find((d) => d.id === activeDisplayScreenId) ||
-  screen.getPrimaryDisplay().id;
+  screen.getPrimaryDisplay();
