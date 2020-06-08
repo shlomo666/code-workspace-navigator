@@ -7,7 +7,7 @@ exports.getListOfOpenedProjects = (excludeMinimized) => {
     fs.readFileSync(vscodeSettingsFilePath).toString()
   );
 
-  /** @type {{ folder: string; uiState: { mode: number; x: number; y: number }; minimized: boolean; }[]} */
+  /** @type {{ folder?: string; uiState: { mode: number; x: number; y: number }; minimized: boolean; }[]} */
   let openedWindowsList = settings.windowsState.openedWindows.map((item) => ({
     ...item,
     minimized: false // item.uiState.mode === 1 && item.uiState.x === 0
@@ -19,10 +19,12 @@ exports.getListOfOpenedProjects = (excludeMinimized) => {
     // );
   }
 
-  const listOfOpenedProjects = openedWindowsList.map((p) => ({
-    path: p.folder.slice(7),
-    minimized: p.minimized
-  }));
+  const listOfOpenedProjects = openedWindowsList
+    .filter((p) => p.folder)
+    .map((p) => ({
+      path: p.folder.slice(7),
+      minimized: p.minimized
+    }));
 
   const order = settings.openedPathsList.workspaces3.map((p) => p.slice(7));
   listOfOpenedProjects.sort(
