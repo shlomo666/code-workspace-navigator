@@ -18,6 +18,7 @@ exports.showMainWindow = (
   setTimeout(() => {
     mainWindow.focus();
     app.dock.show();
+    mainWindow.show();
     console.log('sending show');
     mainWindow.webContents.send('show', updateHTML, excludeMinimized);
   }, 10);
