@@ -65,9 +65,7 @@ const setup = (event, update = false, excludeMinimized = false) => {
 };
 ipcRenderer.on('show', setup);
 
-onSettingChanged(() => () =>
-  setup(null, true, state.lastExcludeMinimizedValue)
-);
+onSettingChanged(() => () => setup(null, true, state.lastExcludeMinimizedValue));
 
 ipcRenderer.on('cannot-resize-you', (event, { maxWidth }) => {
   console.log('got cannot-resize-you');

@@ -1,14 +1,8 @@
 // Modules to control application life and create native browser window
-const {
-  app,
-  BrowserWindow,
-  globalShortcut,
-  ipcMain,
-  screen
-} = require('electron');
+const { app, BrowserWindow, globalShortcut, ipcMain, screen } = require('electron');
 
 const path = require('path');
-const { execSync } = require('child_process');
+const { exec } = require('child_process');
 require('./number_prefix_logs');
 const { showMainWindow, hideMainWindow } = require('./util');
 const tray = require('./tray');
@@ -24,15 +18,16 @@ function createWindow() {
     center: true,
     transparent: true,
     frame: false,
-    fullscreenable: false,
     show: false,
     webPreferences: {
       preload: path.join(appDir, 'preload.js')
     }
   });
 
+  app.dock.hide();
   mainWindow.setAlwaysOnTop(true, 'floating');
   mainWindow.setVisibleOnAllWorkspaces(true);
+  mainWindow.setFullScreenable(false);
 
   setTimeout(() => {
     showMainWindow(mainWindow);
@@ -50,7 +45,9 @@ function createWindow() {
     console.log(`${maxWidth} < ${width} = ${maxWidth < width}`);
     if (maxWidth < width) {
       console.log('sending cannot-resize-you');
-      event.sender.send('cannot-resize-you', { maxWidth });
+      event.sender.send('cannot-resize-you', {
+        maxWidth
+      });
     } else {
       mainWindow.setSize(Math.floor(width), Math.floor(height));
       mainWindow.center();
@@ -61,7 +58,7 @@ function createWindow() {
   ipcMain.on('selected', (event, choice) => {
     hideMainWindow(mainWindow);
 
-    execSync(`/usr/local/bin/code ${choice}`);
+    exec(`/usr/local/bin/code ${choice}`);
   });
 
   mainWindow.loadFile(appDir + '/index.html');
