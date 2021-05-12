@@ -10,7 +10,7 @@ const tray = require('./tray');
 
 process.env.PATH = shellPath.sync();
 try {
-  execSync('which code2');
+  execSync('which code');
 } catch (err) {
   dialog.showErrorBox("Couldn't find code command.", 'Please go to vscode; type cmd+shift+p; type "install code" and click the first option.');
   app.exit(1);
