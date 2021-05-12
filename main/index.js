@@ -1,11 +1,21 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, globalShortcut, ipcMain, screen } = require('electron');
+const { app, BrowserWindow, globalShortcut, ipcMain, screen, dialog } = require('electron');
 
 const path = require('path');
-const { exec } = require('child_process');
+const shellPath = require('shell-path');
+const { exec, execSync } = require('child_process');
 require('./number_prefix_logs');
 const { showMainWindow, hideMainWindow } = require('./util');
 const tray = require('./tray');
+
+process.env.PATH = shellPath.sync();
+try {
+  execSync('which code2');
+} catch (err) {
+  dialog.showErrorBox("Couldn't find code command.", 'Please go to vscode; type cmd+shift+p; type "install code" and click the first option.');
+  app.exit(1);
+  return;
+}
 
 app.allowRendererProcessReuse = true;
 const appDir = path.dirname(require.main.filename);
