@@ -11,6 +11,14 @@ exports.getListOfOpenedProjects = (excludeMinimized) => {
     minimized: false // item.uiState.mode === 1 && item.uiState.x === 0
   }));
 
+  if (!openedWindowsList.length) {
+    const win = {
+      ...settings.windowsState.lastActiveWindow,
+      minimized: false // item.uiState.mode === 1 && item.uiState.x === 0
+    };
+    openedWindowsList = win ? [win] : [];
+  }
+
   if (excludeMinimized) {
     openedWindowsList = openedWindowsList.filter((p) => (excludeMinimized ? !p.minimized : true));
   }

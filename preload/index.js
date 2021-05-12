@@ -55,7 +55,7 @@ const setup = (event, update = false, excludeMinimized = false) => {
   const prevListSize = state.listOfOpenedProjects.length;
   state.setListOfOpenedProjects(excludeMinimized);
   const currListSize = state.listOfOpenedProjects.length;
-  state.idx = 1;
+  state.idx = currListSize === 1 ? 0 : 1; // if only one window don't target the next window
   if (prevListSize !== currListSize || update) {
     styles.restoreOriginalSize();
     sendSizeToMain();

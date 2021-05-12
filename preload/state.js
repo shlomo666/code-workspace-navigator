@@ -33,7 +33,7 @@ module.exports = {
   },
 
   getCurrentProject() {
-    return this.listOfOpenedProjects[this.idx].path;
+    return (this.listOfOpenedProjects[this.idx] || {}).path;
   }
 };
 

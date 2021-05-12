@@ -68,7 +68,9 @@ function createWindow() {
   ipcMain.on('selected', (event, choice) => {
     hideMainWindow(mainWindow);
 
-    exec(`code '${choice}'`);
+    if (choice) {
+      exec(`code '${choice}'`);
+    }
   });
 
   mainWindow.loadFile(appDir + '/index.html');
