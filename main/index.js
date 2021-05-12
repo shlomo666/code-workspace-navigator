@@ -14,7 +14,7 @@ try {
 } catch (err) {
   dialog.showErrorBox("Couldn't find code command.", 'Please go to vscode; type cmd+shift+p; type "install code" and click the first option.');
   app.exit(1);
-  return;
+  return process.exit(1);
 }
 
 app.allowRendererProcessReuse = true;
