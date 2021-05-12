@@ -12,26 +12,24 @@ exports.getListOfOpenedProjects = (excludeMinimized) => {
   }));
 
   if (excludeMinimized) {
-    // openedWindowsList = openedWindowsList.filter((p) =>
-    //   excludeMinimized ? !p.minimized : true
-    // );
+    openedWindowsList = openedWindowsList.filter((p) => (excludeMinimized ? !p.minimized : true));
   }
 
   const listOfOpenedProjects = openedWindowsList
     .filter((p) => p.folder)
     .map((p) => ({
-      path: p.folder.slice(7),
+      path: decodeURI(p.folder.slice(7)),
       minimized: p.minimized
     }));
 
-  const order = settings.openedPathsList.workspaces3.map((p) => p.slice(7));
+  const order = settings.openedPathsList.entries.filter((p) => p.folderUri).map((p) => decodeURI(p.folderUri.slice(7)));
   listOfOpenedProjects.sort((a, b) => order.indexOf(a.path) - order.indexOf(b.path));
 
   return listOfOpenedProjects;
 };
 
 exports.onSettingChanged = (cb) => {
-  fs.watchFile('vscodeSettingsFilePath', () => {
+  fs.watchFile(vscodeSettingsFilePath, () => {
     cb();
   });
 };
