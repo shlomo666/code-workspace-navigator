@@ -3,9 +3,7 @@ const fs = require('fs');
 const vscodeSettingsFilePath = `${process.env.HOME}/Library/Application Support/Code/storage.json`;
 
 exports.getListOfOpenedProjects = (excludeMinimized) => {
-  const settings = JSON.parse(
-    fs.readFileSync(vscodeSettingsFilePath).toString()
-  );
+  const settings = JSON.parse(fs.readFileSync(vscodeSettingsFilePath).toString());
 
   /** @type {{ folder?: string; uiState: { mode: number; x: number; y: number }; minimized: boolean; }[]} */
   let openedWindowsList = settings.windowsState.openedWindows.map((item) => ({
@@ -27,9 +25,7 @@ exports.getListOfOpenedProjects = (excludeMinimized) => {
     }));
 
   const order = settings.openedPathsList.workspaces3.map((p) => p.slice(7));
-  listOfOpenedProjects.sort(
-    (a, b) => order.indexOf(a.path) - order.indexOf(b.path)
-  );
+  listOfOpenedProjects.sort((a, b) => order.indexOf(a.path) - order.indexOf(b.path));
 
   return listOfOpenedProjects;
 };

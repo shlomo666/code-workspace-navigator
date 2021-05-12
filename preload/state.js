@@ -18,9 +18,7 @@ module.exports = {
       .map(
         (project, i) =>
           `<div onmouseover="setIdx(${i});" onmouseup="selectAndFinish()" style="${
-            i === this.idx
-              ? markedStyle(project.minimized)
-              : normalStyle(project.minimized)
+            i === this.idx ? markedStyle(project.minimized) : normalStyle(project.minimized)
           }">${getProjectProperDisplayName(project.path)}</div>`
       )
       .join('\n');
@@ -31,9 +29,7 @@ module.exports = {
   },
 
   prevId() {
-    this.idx =
-      (this.listOfOpenedProjects.length + this.idx - 1) %
-      this.listOfOpenedProjects.length;
+    this.idx = (this.listOfOpenedProjects.length + this.idx - 1) % this.listOfOpenedProjects.length;
   },
 
   getCurrentProject() {

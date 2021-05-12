@@ -1,10 +1,6 @@
 const { app, Menu, screen } = require('electron');
 
-exports.getContextMenu = ({
-  primaryDisplayId,
-  setExcludeMinimized,
-  setDisplayScreen
-}) => {
+exports.getContextMenu = ({ primaryDisplayId, setExcludeMinimized, setDisplayScreen }) => {
   return Menu.buildFromTemplate([
     {
       label: 'Exclude Minimized (this feature is not yet supported)',
@@ -31,9 +27,7 @@ exports.getContextMenu = ({
       label: 'Active Display Screen',
       submenu: Menu.buildFromTemplate(
         screen.getAllDisplays().map((display) => ({
-          label: `screen ${display.id}${
-            display.id === primaryDisplayId ? ' (Main)' : ''
-          }`,
+          label: `screen ${display.id}${display.id === primaryDisplayId ? ' (Main)' : ''}`,
           type: 'radio',
           click() {
             setDisplayScreen(display.id);

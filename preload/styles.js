@@ -30,8 +30,7 @@ exports.setWidthPerCell = (newWidthPerCell) => {
   setAllVars();
 };
 
-const backColor = (opacity, minimized) =>
-  `rgba(${minimized ? '100, 100, 100' : '10, 10, 10'}, ${opacity})`;
+const backColor = (opacity, minimized) => `rgba(${minimized ? '100, 100, 100' : '10, 10, 10'}, ${opacity})`;
 
 const standard = () => `
 margin: 0px ${gap}px;

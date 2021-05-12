@@ -52,6 +52,4 @@ let excludeMinimized = false;
 let activeDisplayScreenId;
 
 exports.getExcludeMinimized = () => excludeMinimized;
-exports.getActiveDisplayScreen = () =>
-  screen.getAllDisplays().find((d) => d.id === activeDisplayScreenId) ||
-  screen.getPrimaryDisplay();
+exports.getActiveDisplayScreen = () => screen.getAllDisplays().find((d) => d.id === activeDisplayScreenId) || screen.getPrimaryDisplay();
