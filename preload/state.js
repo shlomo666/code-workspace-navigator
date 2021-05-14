@@ -42,6 +42,6 @@ function getProjectProperDisplayName(s) {
   return s
     .split('/')
     .pop()
-    .replace(/\-/g, ' ')
+    .replace(/\-|\./g, ' ')
     .replace(/[a-z]+/g, (p) => p[0].toUpperCase() + p.slice(1).toLowerCase());
 }
