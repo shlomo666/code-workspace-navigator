@@ -41,3 +41,11 @@ exports.onSettingChanged = (cb) => {
     cb();
   });
 };
+
+exports.changeOrderOfProjectsManually = (projects, choice) => {
+  const idx = projects.findIndex((proj) => proj.path === choice);
+  if (idx > 0) {
+    const [selectedProject] = projects.splice(idx, 1);
+    projects.unshift(selectedProject);
+  }
+};

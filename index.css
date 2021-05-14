@@ -1,0 +1,15 @@
+#heightMarginContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+#root {
+  margin: auto;
+  padding: 1rem 2rem;
+  background-color: rgb(30, 30, 30);
+  width: fit-content;
+  display: flex;
+  margin: auto;
+  border-radius: 3rem;
+}

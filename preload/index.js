@@ -2,19 +2,24 @@ const { ipcRenderer } = require('electron');
 const state = require('./state');
 const { replaceText } = require('./utils');
 const styles = require('./styles');
-const { onSettingChanged } = require('./vscodeSettingsReader');
+const { onSettingChanged, changeOrderOfProjectsManually } = require('./vscodeSettingsReader');
 
 window.addEventListener('DOMContentLoaded', () => {
   setup();
 
   let tabIsPressed = false;
 
-  window.onkeyup = (key) => {
-    if (key.key === 'Tab') {
+  window.onkeyup = (event) => {
+    const { key, altKey } = event;
+
+    if (key === 'Tab') {
       tabIsPressed = false;
     }
-    if (key.key === 'Alt' || !key.altKey) {
-      selectAndFinish();
+    if (key === 'Alt' || !altKey) {
+      finishAndSelectCurrentProject();
+    }
+    if (key === 'Escape') {
+      finishWithNoSelect();
     }
   };
   window.onkeydown = (key) => {
@@ -42,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
       setScreen();
     }
   };
-  window.selectAndFinish = selectAndFinish;
+  window.finishAndSelectCurrentProject = finishAndSelectCurrentProject;
 });
 
 let delegate = false;
@@ -88,9 +93,17 @@ function sendSizeToMain() {
   });
 }
 
-function selectAndFinish() {
+function selectAndFinish(path) {
   delegate = false;
-  ipcRenderer.send('selected', state.getCurrentProject());
+  ipcRenderer.send('selected', path);
+}
+function finishWithNoSelect() {
+  selectAndFinish(null);
+}
+function finishAndSelectCurrentProject() {
+  selectAndFinish(state.getCurrentProject());
+  changeOrderOfProjectsManually(state.listOfOpenedProjects, state.getCurrentProject());
+  setScreen();
 }
 
 function setScreen() {

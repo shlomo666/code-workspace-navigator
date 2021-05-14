@@ -52,18 +52,19 @@ function createWindow() {
     console.log('got resize-me-please request');
 
     const maxWidth = tray.getActiveDisplayScreen().size.width;
-    console.log(`${maxWidth} < ${width} = ${maxWidth < width}`);
-    if (maxWidth < width) {
-      console.log('sending cannot-resize-you');
-      event.sender.send('cannot-resize-you', {
-        maxWidth
-      });
-    } else {
-      mainWindow.setSize(Math.floor(width), Math.floor(height));
-      mainWindow.center();
-      console.log('sending resized-you');
-      event.sender.send('resized-you');
-    }
+    const maxHeight = tray.getActiveDisplayScreen().size.height;
+    // console.log(`${maxWidth} < ${width} = ${maxWidth < width}`);
+    // if (maxWidth < width) {
+    //   console.log('sending cannot-resize-you');
+    //   event.sender.send('cannot-resize-you', {
+    //     maxWidth
+    //   });
+    // } else {
+    mainWindow.setSize(maxWidth, maxHeight);
+    mainWindow.center();
+    console.log('sending resized-you');
+    event.sender.send('resized-you');
+    // }
   });
   ipcMain.on('selected', (event, choice) => {
     hideMainWindow(mainWindow);

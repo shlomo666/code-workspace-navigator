@@ -17,9 +17,9 @@ module.exports = {
     return this.listOfOpenedProjects
       .map(
         (project, i) =>
-          `<div onmouseover="setIdx(${i});" onmouseup="selectAndFinish()" style="${
+          `<div onmouseover="setIdx(${i});" onmouseup="finishAndSelectCurrentProject()" style="${
             i === this.idx ? markedStyle(project.minimized) : normalStyle(project.minimized)
-          }">${getProjectProperDisplayName(project.path)}</div>`
+          }"><span>${getProjectProperDisplayName(project.path)}</span></div>`
       )
       .join('\n');
   },
